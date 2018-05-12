@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	int sock_fd = -1;
 	struct sockaddr_in6 server_addr;
 	int ret;
-	char ch = 'a';
+	char ch = 'A';
  
 	/* Arguments could be used in getaddrinfo() to get e.g. IP of server */
 	(void)argc;
@@ -27,8 +27,9 @@ int main(int argc, char *argv[])
  
 	/* Connect to server running on localhost */
 	server_addr.sin6_family = AF_INET6;
-	inet_pton(AF_INET6, "::1", &server_addr.sin6_addr);
-	server_addr.sin6_port = htons(SERVER_PORT);
+	inet_pton(AF_INET6, argv[1], &server_addr.sin6_addr);
+	server_addr.sin6_port = htons(atoi(argv[2]));
+
  
 	/* Try to do TCP handshake with server */
 	ret = connect(sock_fd, (struct sockaddr*)&server_addr, sizeof(server_addr));
